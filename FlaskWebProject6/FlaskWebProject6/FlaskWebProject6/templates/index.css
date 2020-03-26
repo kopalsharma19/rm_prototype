@@ -1,0 +1,156 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    transition: all ease .2s;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    margin: auto;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+h1 {
+    font-size: 3.6em;
+}
+
+h4 {
+    font-size: 1.8em;
+    color: whitesmoke;
+    font-weight: 110;
+    letter-spacing: 0.5px;
+}
+
+h5 {
+    font-size: 1.5em;
+    color: whitesmoke;
+    font-weight: 150;
+}
+
+h6 {
+    font-size: 1.2em;
+    color: whitesmoke;
+}
+
+p {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.side-menu {
+    position: fixed;
+    float: left;
+    height: 100%;
+    width: 16vw;
+    background-color: #4e4e4e;
+}
+
+.menu-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.menu-opt {
+    cursor: pointer;
+    margin-top: 0.3em;
+    margin-left: 10px;
+}
+
+#selected {
+    color: #2da4c1;
+}
+
+.avatar {
+    padding: 10px;
+    margin: 20px;
+    margin-right: 40px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.avatar-text {
+    position: relative;
+    float: right;
+    padding-top: 2px;
+    padding-left: 20px;
+    vertical-align: center;
+    line-height: 2em;
+}
+
+.icon {
+    position: relative;
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+    margin-left: 10px;
+    float: left;
+    vertical-align: center;
+}
+
+.cards-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 18vw;
+}
+
+.card {
+    float: left;
+    position: relative;
+    width: 55vw;
+    max-height: 30vw;
+    border: 1px solid #4e4e4e;
+    border-radius: 0.5rem;
+    margin: 10px;
+    margin-top: 50px;
+}
+
+#card-icon {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.card-title {
+    position: relative;
+    font-weight: 100;
+    color: #4e4e4e;
+    margin-top: 35px;
+    margin-left: 80px;
+}
+
+.text-content {
+    float: left;
+    margin-left: 48px;
+    margin-bottom: 20px;
+    max-width: 44vw;
+}
+
+.content {
+    padding: 15px;
+    margin: 20px;
+}
+
+.button {
+    float: right;
+    border: solid 0.5px #4e4e4e;
+    border-radius: 1rem;
+    padding: 5px;
+}
+
+.button-text {
+    position: relative;
+    right: 10px;
+    float: right;
+}

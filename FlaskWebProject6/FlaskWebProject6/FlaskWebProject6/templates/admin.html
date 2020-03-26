@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/content/index.css" />
+    <meta name="viewport" content="width = device-width, initial-scale= 1.0" />
+    <script src="https://kit.fontawesome.com/18264bfb6e.js" crossorigin="anonymous"></script>
+    <title>Admin Page</title>
+</head>
+<body>
+    <div class="side-menu">
+        <div class="avatar">
+            <img src="src/admin.jpg.png" alt="Admin Profile Image" class="icon">
+            <a href="{{url_for('admin_dash')}}">
+            <h4 class="avatar-text">ADMIN</h4>
+            </a>
+        </div>
+        <div class="menu-select">
+            <a href="{{url_for('admin')}}">
+            <h4 class="menu-opt" id="selected">TASKS TODAY</h4>
+            </a>
+            <h4 class="menu-opt">UPCOMING</h4>
+        </div>
+    </div>
+    <!--
+        <section class =  "card-area">
+    -->
+    <div class="cards-list">
+        {% for t in records_list %}
+        <div class="card" id="card1">
+            <img src="src/admin.jpg.png" alt="Card Image" class="icon" id="card-icon">
+            <h5 class="card-title">{{t['Activity']}} </h5>
+            <div class="content">
+                <a href="./done?_id={{t['_id']}}"><input type="button" value="Done"></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+</body>
+</html>

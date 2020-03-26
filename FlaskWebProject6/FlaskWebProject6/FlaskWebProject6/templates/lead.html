@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="/static/content/index.css" />
+    <meta name="viewport" content="width = device-width, initial-scale= 1.0" />
+    <script src="https://kit.fontawesome.com/18264bfb6e.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="scripts/admin.js"></script>
+    <title>Admin Page</title>
+</head>
+<body>
+    <div class="side-menu">
+        <h4 class="workamp-text">WORKAMP</h4>
+        <div class="avatar">
+            <img src="src/admin.jpg.png" alt="Admin Profile Image" class="icon">
+            <h4 class="avatar-text">ADMIN</h4>
+        </div>
+        <div class="menu-select">
+            <a href="admin_dash.html">
+                <h4 class="menu-opt" ">DASHBOARD</h4>
+            </a>
+            <a href="admin2.html">
+                <h4 class="menu-opt" id="selected">UPCOMING</h4>
+        </div>
+        </a>
+    </div>
+    <div class="cards-list">
+        <div class="top-line">
+            <div class="sec-container">
+                <h3 class="complete-details">
+                    Tasks completed this month
+                </h3>
+                <div class="bar-container">
+                    <div class="bar-outer">
+                        <div class="bar-inner">
+                        </div>
+                    </div>
+                </div>
+                <p class="percent">{{per}}</p>
+            </div>
+
+            <div class="month">
+                <select class="checklist month-check">
+                    <option value="0">Select</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                </select>
+            </div>
+        </div>
+        <a href="lead-task.html">
+            <div class="button" id="task-det">
+                <div class="button-text" id="td-button">Check Task Details</div>
+            </div>
+        </a>
+        <div class="expense-sec">
+            <p class="sec-head">
+                Total Inventory Expense
+                <b>Rs 25,343</b>
+            </p>
+            <!--<h3 class="amount" id="sec">
+
+            </h3>-->
+            <p class="sec-desc">
+                You have spent the most on coffee(Rs. 12,231) this month
+            </p>
+            <a href="lead_inv.html">
+                <div class="button" id="task-det">
+                    <div class="button-text" id="td-button">See all inventory details</div>
+                </div>
+            </a>
+        </div>
+        <div class="expense-sec">
+            <p class="sec-head">
+                Total Inventory Expense
+                <b>Rs 25,343</b>
+            </p>
+            <!--<h3 class="amount" id="sec">
+
+            </h3>-->
+            <p class="sec-desc">
+                You have spent Rs. 12,231 less than the monthly average
+            </p>
+            <a href="lead_fin.html">
+                <div class="button" id="task-det">
+                    <div class="button-text" id="td-button">See all financial details</div>
+                </div>
+            </a>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>
