@@ -36,6 +36,19 @@
                 </select>
             </div>
             {% endfor %}
+            <p>Items already checked</p>
+            {% for t in fridge_done_list %}
+            <div class="card" id="check-list">
+                <div class="check-div">
+                    <h5 class="card-title" id="check-title">{{t['Item']}}</h5>
+                </div>
+                <select name="{{t['Item']}}" class="checklist">
+                    <option value="None">Choose</option>
+                    <option value="Okay">Okay</option>
+                    <option value="Not Okay">Not Okay</option>
+                </select>
+            </div>
+            {% endfor %}
             <div class="buttons">
                 <button class="button" type="submit">Submit</button>
             </div>

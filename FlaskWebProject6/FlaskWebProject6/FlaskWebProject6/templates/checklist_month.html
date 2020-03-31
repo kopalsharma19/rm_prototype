@@ -30,7 +30,7 @@
                     <h5 class="card-title" id="check-title">{{t['Title']}}</h5>
                     <p>{{t['Process']}}</p>
                 </div>
-                
+
                 <select name="{{t['Title']}}" class="checklist">
                     <option value="None">Choose</option>
                     <option value="Okay">Okay</option>
@@ -38,6 +38,22 @@
                 </select>
             </div>
             {% endfor %}
+            <p>Items already checked</p>
+            {% for t in monthly_done_list %}
+            <div class="card" id="check-list">
+                <div class="check-div">
+                    <h5 class="card-title" id="check-title">{{t['Title']}}</h5>
+                    <p>{{t['Process']}}</p>
+                </div>
+
+                <select name="{{t['Title']}}" class="checklist">
+                    <option value=  "None">Choose</option>
+                    <option value="Okay">Okay</option>
+                    <option value="Not Okay">Not Okay</option>
+                </select>
+            </div>
+            {% endfor %}
+
             <div class="buttons">
                 <button class="button" type="submit">Submit</button>
             </div>

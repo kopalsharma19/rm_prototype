@@ -28,6 +28,7 @@ fnb = db["fnb"]
 office_supp = db["Office Supplies"]
 housekeeping = db["Housekeeping"]
 finance = db["Finance"]
+snag = db["Snag"]
 
 
 def redirect_url():
@@ -108,8 +109,9 @@ def checklist_dash():
 
 @app.route("/checklist")
 def checklist():
-    washroom_list = washroom_checklist.find()
-    return render_template('checklist.html',washroom_list = washroom_list)
+    washroom_list = washroom_checklist.find({"Status":"None"})
+    washroom_done_list = washroom_checklist.find({"Status": {"$in": ["Okay","Not Okay"]}})
+    return render_template('checklist.html',washroom_list = washroom_list, washroom_done_list = washroom_done_list)
 
 
 @app.route("/okaydrop", methods=['POST'])    
@@ -164,19 +166,19 @@ def okaydrop():
     washroom_checklist.update_many({'Status': 'Okay'}, {"$set": { "done": "yes" }})
         
     if(washroom_checklist.find({"Item":"Flush"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Flush","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Flush","done":"no","createdAt": datetime.now(),"Category":"Washroom"})
     if(washroom_checklist.find({"Item":"Taps"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Taps","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Taps","done":"no","createdAt":datetime.now(),"Category":"Washroom"})
     if(washroom_checklist.find({"Item":"Cleanliness of water from taps"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Cleanliness of water from taps","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Cleanliness of water from taps","done":"no","createdAt":datetime.now(),"Category":"Washroom"})
     if(washroom_checklist.find({"Item":"Door mechanism of all cubicles"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Door mechanism of all cubicles","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Door mechanism of all cubicles","done":"no","createdAt":datetime.now(),"Category":"Washroom"})
     if(washroom_checklist.find({"Item":"Smell"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Smell","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Smell","done":"no","createdAt":datetime.now(),"Category":"Washroom"})
     if(washroom_checklist.find({"Item":"Mirror"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Mirror","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Mirror","done":"no","createdAt":datetime.now(),"Category":"Washroom"})
     if(washroom_checklist.find({"Item":"Handshower leakage and mechanism"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Handshower leakage and mechanism","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Handshower leakage and mechanism","done":"no","createdAt":datetime.now(),"Category":"Washroom"})
     else:
         pass
 
@@ -184,9 +186,10 @@ def okaydrop():
 
 @app.route("/checklist_fridge")
 def checklist_fridge():
-    fridge_list = fridge_checklist.find()
-    return render_template('checklist_fridge.html',fridge_list = fridge_list)
+    fridge_list = fridge_checklist.find({"Status":"None"})
+    fridge_done_list = fridge_checklist.find({"Status": {"$in": ["Okay","Not Okay"]}})
 
+    return render_template('checklist_fridge.html',fridge_list = fridge_list,fridge_done_list = fridge_done_list)
 
 @app.route("/okaydrop_fridge", methods=['POST'])    
 def okaydrop_fridge():    
@@ -209,9 +212,9 @@ def okaydrop_fridge():
     fridge_checklist.update_many({'Status': 'Okay'}, {"$set": { "done": "yes" }})
         
     if(fridge_checklist.find({"Item":"Door mechanism"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Door mechanism","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Door mechanism","done":"no","createdAt":datetime.now(),"Category":"Fridge"})
     if(fridge_checklist.find({"Item":"Cooling"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Cooling","done":"no","createdAt":datetime.now()})
+        records.insert_one({"Activity":"Cooling","done":"no","createdAt":datetime.now(),"Category":"Fridge"})
     else:
         pass
 
@@ -219,8 +222,9 @@ def okaydrop_fridge():
 
 @app.route("/checklist_huddleroom")
 def checklist_huddleroom():
-    huddle_list = huddle_checklist.find()
-    return render_template('checklist_huddleroom.html',huddle_list = huddle_list)
+    huddle_list = huddle_checklist.find({"Status":"None"})
+    huddle_done_list = huddle_checklist.find({"Status": {"$in": ["Okay","Not Okay"]}})
+    return render_template('checklist_huddleroom.html',huddle_list = huddle_list, huddle_done_list = huddle_done_list)
 
 
 @app.route("/okaydrop_huddleroom", methods=['POST'])    
@@ -274,19 +278,19 @@ def okaydrop_huddleroom():
     huddle_checklist.update_many({'Status': 'Okay'}, {"$set": { "done": "yes" }})
         
     if(huddle_checklist.find({"Item":"HDMI"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"HDMI","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"HDMI","done":"no","createdAt": datetime.now(),"Category":"Huddle Room"})
     if(huddle_checklist.find({"Item":"Chair and table damage"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Chair and table damage","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Chair and table damage","done":"no","createdAt": datetime.now(),"Category":"Huddle Room"})
     if(huddle_checklist.find({"Item":"No. of markers"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"No. of markers","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"No. of markers","done":"no","createdAt": datetime.now(),"Category":"Huddle Room"})
     if(huddle_checklist.find({"Item":"Writing boards"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Writing boards","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Writing boards","done":"no","createdAt": datetime.now(),"Category":"Huddle Room"})
     if(huddle_checklist.find({"Item":"Remote"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Remote","done":"no", "createdAt": datetime.now()})
+        records.insert_one({"Activity":"Remote","done":"no", "createdAt": datetime.now(),"Category":"Huddle Room"})
     if(huddle_checklist.find({"Item":"Wear and tear"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Wear and tear","done":"no", "createdAt": datetime.now()})
+        records.insert_one({"Activity":"Wear and tear","done":"no", "createdAt": datetime.now(),"Category":"Huddle Room"})
     if(huddle_checklist.find({"Item":"TV"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"TV","done":"no", "createdAt": datetime.now()})
+        records.insert_one({"Activity":"TV","done":"no", "createdAt": datetime.now(),"Category":"Huddle Room"})
     else:
         pass
 
@@ -294,8 +298,9 @@ def okaydrop_huddleroom():
 
 @app.route("/checklist_meeting")
 def checklist_meeting():
-    meeting_list = meeting_checklist.find()
-    return render_template('checklist_meeting.html',meeting_list = meeting_list)
+    meeting_list = meeting_checklist.find({"Status":"None"})
+    meeting_done_list = meeting_checklist.find({"Status": {"$in": ["Okay","Not Okay"]}})
+    return render_template('checklist_meeting.html',meeting_list = meeting_list, meeting_done_list = meeting_done_list)
 
 
 @app.route("/okaydrop_meeting", methods=['POST'])    
@@ -377,27 +382,27 @@ def okaydrop_meeting():
     meeting_checklist.update_many({'Status': 'Okay'}, {"$set": { "done": "yes" }})
         
     if(meeting_checklist.find({"Item":"HDMI"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"HDMI","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"HDMI","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Chair and table damage"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Chair and table damage","done":"no"})
+        records.insert_one({"Activity":"Chair and table damage","done":"no","createdAt":datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"No. of markers"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"No. of markers","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"No. of markers","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Water glasses clean"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Water glasses clean","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Water glasses clean","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Remote"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Remote","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Remote","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Wear and tear"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Wear and tear","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Wear and tear","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"TV"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"TV","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"TV","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Duster"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Duster","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Duster","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Screen sharing"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Screen sharing","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Screen sharing","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Plug points functional"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Plug points functional","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Plug points functional","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     if(meeting_checklist.find({"Item":"Water Jug broken"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Water Jug broken","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Water Jug broken","done":"no","createdAt": datetime.now(),"Category":"Meeting Room"})
     else:
         pass
 
@@ -540,7 +545,10 @@ def inventory_housekeeping():
 @app.route("/checklist_month")
 def checklist_month():
     monthly_list = monthly_checklist.find()
-    return render_template('checklist_month.html',monthly_list = monthly_list)
+    monthly_list = monthly_checklist.find({"Status":"None"})
+    monthly_done_list = monthly_checklist.find({"Status": {"$in": ["Okay","Not Okay"]}})
+    return render_template('checklist_month.html',monthly_list = monthly_list,monthly_done_list = monthly_done_list)
+
 
 @app.route("/okaydrop_month", methods=['POST'])    
 def okaydrop_month():    
@@ -587,17 +595,17 @@ def okaydrop_month():
         pass
         
     if(monthly_checklist.find({"Title":"Pest Control"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Pest Control","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Pest Control","done":"no","createdAt": datetime.now(),"Category":"Monthly"})
     if(monthly_checklist.find({"Title":"Electrical Equip"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Electrical Equip","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Electrical Equip","done":"no","createdAt": datetime.now(),"Category":"Monthly"})
     if(monthly_checklist.find({"Title":"Lift"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Lift","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Lift","done":"no","createdAt": datetime.now(),"Category":"Monthly"})
     if(monthly_checklist.find({"Title":"Plumbing"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Plumbing","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Plumbing","done":"no","createdAt": datetime.now(),"Category":"Monthly"})
     if(monthly_checklist.find({"Title":"Carpentary/Polishing"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Carpentary/Polishing","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Carpentary/Polishing","done":"no","createdAt": datetime.now(),"Category":"Monthly"})
     if(monthly_checklist.find({"Title":"Deep Cleaning"})[0]["Status"]=="Not Okay"):
-        records.insert_one({"Activity":"Deep Cleaning","done":"no","createdAt": datetime.now()})
+        records.insert_one({"Activity":"Deep Cleaning","done":"no","createdAt": datetime.now(),"Category":"Monthly"})
     else:
         pass
 
@@ -611,8 +619,10 @@ def admin_task():
 
 @app.route('/admin')
 def admin():
+    
     records_list = records.find({"done":"no"})
-    return render_template('admin.html',records_list = records_list)
+    snag_list = snag.find({})
+    return render_template('admin.html',records_list = records_list, snag_list=snag_list)
 
    
 @app.route("/done")    
@@ -676,27 +686,101 @@ def check_inventory():
     concat = pantry_dict+fnb_dict+office_supp_dict+housekeeping_dict 
     return render_template('check_inventory.html', concat=concat)
    
-
-
-
-@app.route("/lead")
-def lead():
+@app.route("/lead_show")
+def lead_show():
+    timeframe = "01"
+    finance.update_many({},[{"$set":{"month":{"$substr":["$Date of Payment",5,2]}}}])
+    selected_list = list(finance.find({"month":timeframe}))
+    lst=[]
+    for i in selected_list:
+        lst.append(int(i["Amount"]))
+        
+    total = sum(lst)
+    avg = sum(lst)/len(lst)
+    diff = avg - total
+    if(diff<=0):
+        word = "more"
+    elif(diff>0):
+        word = "less"
+    
+    diff = abs(diff)
+        
     done = records.find({"done":"yes"}).count()
     total = records.find().count()
     per = (done/total)*100
+    return render_template('lead.html', per = per, total = total, word = word, diff = diff)
 
-    return render_template('lead.html', per = per)
 
+
+@app.route("/lead", methods=['POST'])
+def lead():
+    timeframe = request.form.get('timeframe')
+    if(timeframe=="0"):
+        return "Please select a time frame"
+    else:
+        finance.update_many({},[{"$set":{"month":{"$substr":["$Date of Payment",5,2]}}}])
+        selected_list = finance.find({"month":timeframe})
+        val = selected_list.count()
+        lst=[]
+        for i in range(0,val):
+            lst.append(int(selected_list[i]["Amount"]))
+        total = sum(lst)
+        val = selected_list.count()
+        avg = total/val
+        diff = avg - total
+        if(diff<0):
+            word = "more"
+        elif(diff>0):
+            word = "less"
+        diff = abs(diff)
+        
+        records.update_many({},[{"$set":{"month":{"$substr":["$Date of Task",3,2]}}}])
+        select_reclist = records.find({"month":timeframe,"done":"yes"})
+
+
+        done = select_reclist.count()
+        total1 = records.find({"month":timeframe}).count()
+        per = (done/total1)*100
+        return render_template('lead.html', per = per, total = total, word = word, diff = diff)
+
+
+@app.route('/expenditure')
+def expenditure():
+    timeframe = "03"
+    electricity = finance.find({"month":timeframe,"Subcategory":"Electricity"})
+    vale = electricity.count()
+    lstede=[]
+    for i in range(0,vale):
+        lstede.append(int(electricity[i]["Amount"]))
+    totale = sum(lstede)
+    vale = electricity.count()
+    avge = totale/vale
+
+    timeback = int(timeframe)
+    timeback = timeback-1
+    timebackstr = "0"+ str(timeback)
+
+    electricity_old = finance.find({"month":timebackstr,"Subcategory":"Electricity"})
+    lstedeold=[]
+    valeold = electricity_old.count()
+
+    for i in range(0,valeold):
+        lstedeold.append(int(electricity_old[i]["Amount"]))
+    totaleold = sum(lstedeold)
+
+    return render_template("expenditure.html", totale = totale,avge=avge , totaleold = totaleold)
+
+@app.route('/lead_task')
+def lead_task():
+    timeframe = "03"
+    done_task = records.find({"month":timeframe,"done":"yes"}).count()  
+    notdone_task = records.find({"month":timeframe,"done":"no"}).count()  
+
+    return render_template("lead_task.html", done_task = done_task, notdone_task = notdone_task)
+
+    
     
 if __name__=='__main__':
 
     app.run(host='0.0.0.0', port=8080, debug=True)
-
-#delete_rec = {
-#    'Activity':'Delete',
-#    'Status':'1'}
-#records.insert_one(delete_rec)
-#records.delete_one({'Status':'1'})
-
-
 
