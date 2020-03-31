@@ -766,17 +766,90 @@ def expenditure():
 
     for i in range(0,valeold):
         lstedeold.append(int(electricity_old[i]["Amount"]))
-    totaleold = sum(lstedeold)
 
-    return render_template("expenditure.html", totale = totale,avge=avge , totaleold = totaleold)
+    
+    salary = finance.find({"month":timeframe,"Subcategory":"Salary"})
+    vals = salary.count()
+    lsteds=[]
+    for i in range(0,vals):
+        lsteds.append(int(salary[i]["Amount"]))
+    totals = sum(lsteds)
+    vals = salary.count()
+    avgs = totals/vals
 
+
+    salary_old = finance.find({"month":timebackstr,"Subcategory":"Salary"})
+    lstedsold=[]
+    valsold = salary_old.count()
+
+    for i in range(0,valsold):
+        lstedsold.append(int(salary[i]["Amount"]))
+    totalsold = sum(lstedsold)
+
+    otheri = finance.find({"month":timeframe,"Subcategory":"Other","Category":"Inventory"})
+    vali = otheri.count()
+    lstedi=[]
+    for i in range(0,vali):
+        lstedi.append(int(otheri[i]["Amount"]))
+    totali = sum(lstedi)
+    vali = otheri.count()
+    avgi = totali/vali
+
+
+    otheri_old = finance.find({"month":timebackstr,"Subcategory":"Salary","Category":"Inventory"})
+    lstediold=[]
+    valiold = otheri_old.count()
+
+    for i in range(0,valiold):
+        lstediold.append(int(otheri[i]["Amount"]))
+    totaliold = sum(lstediold)
+
+    otherex = finance.find({"month":timeframe,"Subcategory":"Other","Category":"Expense"})
+    valex = otherex.count()
+    lstedex=[]
+    for i in range(0,valex):
+        lstedex.append(int(otherex[i]["Amount"]))
+    totalex = sum(lstedex)
+    valex = otherex.count()
+    avgex = totalex/valex
+
+
+    otherex_old = finance.find({"month":timebackstr,"Subcategory":"Salary","Category":"Expense"})
+    lstedexold=[]
+    valexold = otherex_old.count()
+
+    for i in range(0,valexold):
+        lstedexold.append(int(otherex[i]["Amount"]))
+    totalexold = sum(lstedexold)
+
+
+    total  = totali+totalex
+    totalold = totaliold+totalexold
+    avg = sum(avgs,avgex)/2
+
+
+    return render_template("expenditure.html", totale = totale,avge=avge , totaleold = totaleold, totals = totals, avgs = avgs, totalsold = totalsold,totali=totali, avgi=avgi, totaliold=totaliold, totalex=totalex, totalexold = totalexold, avgex = avgex, total=total, avg=avg, totalold=totalold)
+    
 @app.route('/lead_task')
 def lead_task():
     timeframe = "03"
     done_task = records.find({"month":timeframe,"done":"yes"}).count()  
     notdone_task = records.find({"month":timeframe,"done":"no"}).count()  
 
-    return render_template("lead_task.html", done_task = done_task, notdone_task = notdone_task)
+    test = records.aggregate([{"$group":{"_id":"$Category","count":{"$sum":1}}},{"$sort":{"count":-1}},{"$limit":1}])
+    max_category = list(test)
+    maxtask = max_category[0]["_id"]
+    maxcount = max_category[0]["count"]
+
+    testtask = records.aggregate([{"$group":{"_id":"$Activity","count":{"$sum":1}}},{"$sort":{"count":-1}},{"$limit":1}])
+    max_act = list(testtask)
+    maxact = max_act[0]["_id"]
+    maxactcount = max_act[0]["count"]
+
+
+
+
+    return render_template("lead_task.html", done_task = done_task, notdone_task = notdone_task, maxtask=maxtask, maxcount=maxcount,maxact=maxact,maxactcount=maxactcount)
 
     
     
@@ -784,3 +857,7 @@ if __name__=='__main__':
 
     app.run(host='0.0.0.0', port=8080, debug=True)
 
+test = records.aggregate([{"$group":{"_id":"$Category","count":{"$sum":1}}},{"$sort":{"count":-1}},{"$limit":1}])
+
+for i in test:
+    print(i)
